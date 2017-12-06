@@ -80,11 +80,21 @@
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
       return false; // fixme
+      // [0, 0, 0, 0,]
+      // [0, 0, 0, 0,]
+      // [0, 1, 1, 0,]
+      // [0, 0, 0, 0,]
+      // add all numbers in row rowIndex. If result > 1, return true, else false.
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
       return false; // fixme
+      // [0, 1, 0, 1,]
+      // [1, 0, 1, 0,]
+      // [0, 0, 0, 0,]
+      // [0, 0, 0, 0,]
+      // add all numbers in each row array. If result > 1, return true, else false.
     },
 
 
@@ -95,11 +105,21 @@
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
       return false; // fixme
+      // [1, 0, 0, 0,]
+      // [1, 0, 0, 0,]
+      // [0, 0, 0, 0,]
+      // [0, 0, 0, 0,]
+      // add together the elements at index colIndex of each array. If result > 1, return true, else false
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
       return false; // fixme
+      // [1, 0, 0, 0,]
+      // [1, 0, 0, 0,]
+      // [0, 0, 0, 0,]
+      // [0, 0, 0, 0,]
+      // add together the elements at index 0 of each array. If result > 1, return true, else false
     },
 
 
@@ -110,11 +130,25 @@
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       return false; // fixme
+      // [1, 0, 0, 0,]
+      // [0, 1, 0, 0,]
+      // [0, 0, 0, 0,]
+      // [0, 0, 0, 0,]
+      // For the specific element in the given array, if it's 1, check if 
+      // [thatArray + x][thatElement + x] is 1, where x is a loop of 0-(n-1).
+      // If result > 1, return true, else false
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
       return false; // fixme
+      // [1, 0, 0, 0,]
+      // [0, 1, 0, 0,]
+      // [0, 0, 0, 0,]
+      // [0, 0, 0, 0,]
+      // For the each element in each array, if it's 1, check if 
+      // [thatArray + x][thatElement + x] is 1, where x is a loop of 0-(n-1).
+      // If result > 1, return true, else false
     },
 
 
@@ -125,11 +159,20 @@
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
       return false; // fixme
+      // [0, 0, 1, 0,]
+      // [0, 1, 0, 0,]
+      // [0, 0, 0, 0,]
+      // [0, 0, 0, 0,]
+      // For the each element in each array, if it's 1, check if 
+      // [thatArray + x][thatElement + x] is 1, where x is a loop of 0-(n-1).
+      // If result > 1, return true, else false
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
       return false; // fixme
+      // loop hasMinorDiagonalConflictAt() on each valid position
+      // valid positions? each array index[1,2,3...n] except for final array
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
