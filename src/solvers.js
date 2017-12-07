@@ -17,6 +17,8 @@
 
 window.findNRooksSolution = function(n) {
   var solution = undefined; //fixme
+  // our code here
+  
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
