@@ -79,22 +79,29 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
-      // [0, 0, 0, 0,]
-      // [0, 0, 0, 0,]
-      // [0, 1, 1, 0,]
-      // [0, 0, 0, 0,]
-      // add all numbers in row rowIndex. If result > 1, return true, else false.
+      let currentRow = this.rows()[rowIndex];
+      
+      let count = 0;
+      for (let value of currentRow) {
+        count += value;
+      }
+
+      return count > 1;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
-      // [0, 1, 0, 1,]
-      // [1, 0, 1, 0,]
-      // [0, 0, 0, 0,]
-      // [0, 0, 0, 0,]
-      // add all numbers in each row array. If result > 1, return true, else false.
+      const n = this.rows().length;
+      let rowIndex = 0;
+      
+      while (rowIndex < n) {
+        if (this.hasRowConflictAt(rowIndex)) {
+          return true;
+        }
+        rowIndex++;
+      }
+
+      return false;
     },
 
 
@@ -103,55 +110,75 @@
     // --------------------------------------------------------------
     //
     // test if a specific column on this board contains a conflict
-    hasColConflictAt: function(colIndex) {
-      return false; // fixme
-      // [1, 0, 0, 0,]
-      // [1, 0, 0, 0,]
-      // [0, 0, 0, 0,]
-      // [0, 0, 0, 0,]
-      // add together the elements at index colIndex of each array. If result > 1, return true, else false
+    hasColConflictAt: function(colIndex) {   
+      const n = this.rows().length;
+      let count = 0;
+
+      for (var i = 0; i < n; i++) {
+        let currentRow = this.rows()[i];
+        count += currentRow[colIndex]; 
+      }
+    
+      return count > 1;
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
-      // [1, 0, 0, 0,]
-      // [1, 0, 0, 0,]
-      // [0, 0, 0, 0,]
-      // [0, 0, 0, 0,]
-      // add together the elements at index 0 of each array. If result > 1, return true, else false
+      const n = this.rows().length;
+
+      let colIndex = 0;
+
+      while (colIndex < n) {
+        if (this.hasColConflictAt(colIndex)) {
+          return true;
+        }
+        colIndex++;
+      }
+
+      return false;
     },
-
-
 
     // Major Diagonals - go from top-left to bottom-right
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
-    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
-      // [1, 0, 0, 0,]
-      // [0, 1, 0, 0,]
-      // [0, 0, 0, 0,]
-      // [0, 0, 0, 0,]
-      // For the specific element in the given array, if it's 1, check if 
-      // [thatArray + x][thatElement + x] is 1, where x is a loop of 0-(n-1).
-      // If result > 1, return true, else false
+    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) { //
+      const n = this.rows().length;
+      let row = 0;
+      let col = majorDiagonalColumnIndexAtFirstRow;
+      let count = 0;
+
+      if (majorDiagonalColumnIndexAtFirstRow < 0) {
+        row = Math.abs(majorDiagonalColumnIndexAtFirstRow);
+        col = 0;
+      }
+      while (row < n && col < n) {
+        count = count + this.rows()[row][col];
+        if (count > 1) {
+          return true;
+        }
+        row++;
+        col++;
+      }
+  
+      return false;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
-      // [1, 0, 0, 0,]
-      // [0, 1, 0, 0,]
-      // [0, 0, 0, 0,]
-      // [0, 0, 0, 0,]
-      // For the each element in each array, if it's 1, check if 
-      // [thatArray + x][thatElement + x] is 1, where x is a loop of 0-(n-1).
-      // If result > 1, return true, else false
+      const n = this.rows().length;
+      let majDiagColIndex = -n;
+      debugger;
+      while ((majDiagColIndex + 1) < n) {
+        if (this.hasMajorDiagonalConflictAt(majDiagColIndex)) {
+          return true;
+        }
+
+        majDiagColIndex++;
+      }
+
+      return false;
     },
-
-
 
     // Minor Diagonals - go from top-right to bottom-left
     // --------------------------------------------------------------
@@ -159,20 +186,42 @@
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
       return false; // fixme
-      // [0, 0, 1, 0,]
-      // [0, 1, 0, 0,]
-      // [0, 0, 0, 0,]
-      // [0, 0, 0, 0,]
-      // For the each element in each array, if it's 1, check if 
-      // [thatArray + x][thatElement + x] is 1, where x is a loop of 0-(n-1).
-      // If result > 1, return true, else false
+    //   const n = this.rows().length;
+    //   let row = 0;
+    //   let col = minorDiagonalColumnIndexAtFirstRow;
+    //   let count = 0;
+
+    //   if (minorDiagonalColumnIndexAtFirstRow < 0) {
+    //     row = Math.abs(minorDiagonalColumnIndexAtFirstRow);
+    //     col = 0;
+    //   }
+    //   while (/*row ?? n && col ?? n*/) {
+    //     count = count + this.rows()[row][col];
+    //     if (count > 1) {
+    //       return true;
+    //     }
+    //     row++;
+    //     col++;
+    //   }
+  
+    //   return false;
+
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
-      // loop hasMinorDiagonalConflictAt() on each valid position
-      // valid positions? each array index[1,2,3...n] except for final array
+      const n = this.rows().length;
+      let minDiagColIndex = 2 * n - 1;
+      debugger;
+      while (minDiagColIndex > 0) {
+        if (this.hasMinorDiagonalConflictAt(minDiagColIndex)) {
+          return true;
+        }
+
+        minDiagColIndex--;
+      }
+
+      return false;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
