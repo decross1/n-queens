@@ -16,11 +16,25 @@
 
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
-  // our code here
+  debugger;
+  var solution = null;
   // build unpopulated board
+  var board = new Board({n: n});
   // for loop on length of n
-  // each iteration adds a rook at row[i], col[i]
+  for (var row = 0; row < n; row++) {
+    for (var col = 0; col < n; col ++) {
+    // each iteration adds a rook at row[i], col[i]
+      board.togglePiece(row, col);
+      // check to see if there are any conflicts at position
+      if (board.hasAnyRooksConflicts()) {
+        board.togglePiece(row, col);
+      } else {
+        continue;
+      }
+    }
+  }
+
+  solution = board.rows();
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
@@ -41,7 +55,63 @@ window.countNRooksSolutions = function(n) {
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
-  var solution = undefined; //fixme
+  debugger;
+  var solution = null;
+  // build unpopulated board
+  var board = new Board({n: n});
+  var queens = 0;
+  var startingRow = 0;
+  var startingCol = 0;
+  var startPosCol = 0;
+
+  // for loop on length of n
+  while (queens < n) {
+    // board.togglePiece(startingRow, startingCol);
+    for (var row = startingRow; row < n; row++) {
+      for (var col = startingCol; col < n; col++) {
+      // each iteration adds a queen at row[i], col[i]
+        board.togglePiece(row, col);
+        queens++;
+        // check to see if there are any conflicts at position
+        if (board.hasAnyQueensConflicts()) {
+          board.togglePiece(row, col);
+          queens--;
+        } 
+        
+        if (row !== n - 1 && col !== n - 1) {
+          if (col === n - 1) {
+            startingCol = 0;
+            continue;
+          }
+        } else {
+          continue;
+        }
+      }
+    } // n = 6,  row = 5, col = 5
+
+    if (queens < n) {
+    //also rebuild board w/blank
+      board = new Board({n: n});
+      // queens = 0;
+      // if startingCol < n, startingCol++ else startingRow++, startingCol 0
+      if (startPosCol < n) {
+        startPosCol++;
+        // board.togglePiece(0, startPosCol);
+        // queens++;
+      } else if (startingRow < n) {
+        startingRow++;
+        startingCol = 0;
+      }
+    } 
+  }
+
+      // if (row !== n && col !== n) {
+      //   if (col === n - 1) {
+      //     startingCol = 0;
+      //   }
+      // }
+
+  solution = board.rows();
 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
